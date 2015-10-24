@@ -4,6 +4,8 @@ __author__ = 'ajaynagesh'
 from tweepy.streaming import StreamListener
 from tweepy import OAuthHandler
 from tweepy import Stream
+import tweepy
+
 
 #Variables that contains the user credentials to access Twitter API
 access_token = "16415366-7R7Ff47r8hC6IuIizr9zPmnU2gmqQI6DE6jSTCirZ"
@@ -30,6 +32,11 @@ if __name__ == '__main__':
     auth = OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_token_secret)
     stream = Stream(auth, l)
+    api = tweepy.API(auth)
+
+    public_tweets = api.home_timeline()
+    for tweet in public_tweets:
+        print tweet.text
 
     #This line filter Twitter Streams to capture data by the keywords: 'python', 'javascript', 'ruby'
     stream.filter(track=['news', 'breaking news', 'news story'])
